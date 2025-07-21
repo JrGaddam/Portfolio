@@ -1,0 +1,42 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20 
+    commands:
+      - echo "Installing dependencies..."
+      - npm install # Or 'yarn install' if you use yarn
+
+  build:
+    commands:
+      - echo "Building Next.js application for static export..."
+      # This command triggers 'next build' which, with 'output: export' in next.config.mjs,
+      # will automatically generate the static files in the 'out/' directory.
+      - npm run build
+
+  post_build:
+    commands:
+      - echo "Copying static build files to S3 bucket..."
+      # This command syncs the 'out/' directory (Next.js static export output)
+      # to your S3 bucket.
+      # --delete: Removes files from S3 that are no longer in 'out/'. CRITICAL for updates.
+      # --acl public-read: Makes uploaded files publicly readable (needed for static website hosting).
+      - aws s3 sync out/ s3://jrg-portfolio/ --delete --acl public-read
+      - echo "S3 sync complete."
+
+      - echo "Initiating CloudFront cache invalidation..."
+      # This command tells CloudFront to clear its cache for all paths,
+      # ensuring your users see the latest version.
+      # Replace YOUR_CLOUDFRONT_DISTRIBUTION_ID with your CloudFront Distribution ID.
+      - aws cloudfront create-invalidation --distribution-id E14UA1D3479VY2 --paths "/*"
+      - echo "CloudFront invalidation request sent."
+
+artifacts:
+  # This section tells CodeBuild what files to output as artifacts.
+  # Even if you're directly deploying to S3 in post_build, it's good practice
+  # to specify artifacts. 'base-directory' points to where your website files are.
+  files:
+    - '**/*' # Include all files and subdirectories
+  base-directory: out/ # Important: This should be the directory where Next.js puts its static output (default is 'out/')
+                       # If you configured 'distDir: "build"' in next.config.mjs, change this to 'build/'.
