@@ -1,6 +1,6 @@
 # 🚀 Jayanth Reddy Gaddam - Portfolio
 
-A cyberpunk-inspired portfolio built with Next.js. Experience the terminal vibes and explore my projects in a futuristic interface.
+A cyberpunk-inspired portfolio built with Next.js.
 
 🌐 **[Visit Portfolio](https://jrgaddam.com)**
 
@@ -8,10 +8,6 @@ A cyberpunk-inspired portfolio built with Next.js. Experience the terminal vibes
 ## 🛠️ Built With
 Next.js • TypeScript • Three.js • Framer Motion
 
-
-## 🎲 Random Tech Joke
-<!-- Joke API -->
-![Jokes Card](https://readme-jokes.vercel.app/api)
 
 ## 🚀 Getting Started
 
@@ -34,5 +30,4 @@ Visit `http://localhost:3000` to view the portfolio.
 - Email: ascii.8192@gmail.com
 - LinkedIn: [linkedin.com/in/jrgaddam](https://linkedin.com/in/jrgaddam/)
 
----
 
