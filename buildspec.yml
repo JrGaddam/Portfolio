@@ -22,7 +22,7 @@ phases:
       # to your S3 bucket.
       # --delete: Removes files from S3 that are no longer in 'out/'. CRITICAL for updates.
       # --acl public-read: Makes uploaded files publicly readable (needed for static website hosting).
-      - aws s3 sync out/ s3://jrg-portfolio/ --delete --acl public-read
+      - aws s3 sync out/ s3://jrg-portfolio/ --delete
       - echo "S3 sync complete."
 
       - echo "Initiating CloudFront cache invalidation..."
